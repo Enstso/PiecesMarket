@@ -1,0 +1,25 @@
+{
+  "name": "code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "http-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "auto-reload": "^0.1.0",
+    "browser-sync": "^2.27.10",
+    "http-server": "^14.1.0",
+    "node-dev": "^7.4.3",
+    "node-gyp": "^9.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.26.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.31.10",
+    "nodemon": "^2.0.20",
+    "supervisor": "^0.12.0"
+  }
+}
