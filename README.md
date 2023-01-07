@@ -44,7 +44,7 @@ Filtrer les pièces qui ont des prix non abordables inférieur ou égal à 35 �
 
 Filtrer les pièces qui ont une description :
 
-![décroissants.PNG](décroissants.PNG)
+![descriptions.PNG](descriptions.PNG)
 
 Ce range permet de filtrer les produits en fonction de leur prix :
 
