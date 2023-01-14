@@ -2,13 +2,14 @@
   "name": "code",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "piece.js",
   "scripts": {
     "dev": "http-server"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "browser-sync": "^2.27.11",
     "http-server": "^14.1.0"
   }
 }

@@ -1,4 +1,5 @@
-const pieces = await fetch('pieces-autos.json');
+import { ajoutListenersAvis } from "./avis.js"
+const pieces = await fetch("pieces-autos.json");
 const piece = await pieces.json();
 var fiches = document.querySelector('.fiches').innerHTML='';
 
@@ -6,31 +7,7 @@ function listOriginal(){
     return Array.from(piece);
 }
 
-function detailsElements(){
-    const elementsAbordables = document.createElement('ul');
 
-    for(let i = 0;i< piece.length;i++){
-        if(piece[i].prix<35){
-            var nomElement1 = document.createElement('li');
-            nomElement1.innerText = piece[i].nom;
-            elementsAbordables.appendChild(nomElement1);
-        }
-    }
-    
-    document.querySelector('.abordables').appendChild(elementsAbordables);
-    
-    const elementsDisponibles = document.createElement('ul');
-    
-    for(let i=0;i<piece.length;i++){
-        if(piece[i].disponibilite == true){
-            var nomElement2 = document.createElement('li');
-            nomElement2.innerText = piece[i].nom + " - "+ piece[i].prix + " $";
-            elementsDisponibles.appendChild(nomElement2);
-        }
-    }
-    
-    document.querySelector('.disponibles').appendChild(elementsDisponibles);
-}
 
 function inputRange(){
     const range = document.querySelector('#range-filtre');
@@ -46,10 +23,10 @@ function genererpieces(piece){
     for (let i=0;i<piece.length;i++){
 
     const article = document.createElement('article');
-    fiches = document.querySelector('.fiches');
-
-    const elmt = piece[i];
+    const btnavis = document.createElement('button');
     
+    const elmt = piece[i];
+    fiches = document.querySelector('.fiches');
 
     const imageElement = document.createElement('img');
     imageElement.src = elmt.image;
@@ -68,21 +45,26 @@ function genererpieces(piece){
 
     const disponibiliteElement = document.createElement('p');
     disponibiliteElement.innerText =  elmt.disponibilite ? "En stock" : "Rupture de stock";
-
+    
+    btnavis.dataset.id = elmt.id;
+    btnavis.textContent = "Afficher les avis";
+    
     article.appendChild(imageElement);
     article.appendChild(nomElement);
     article.appendChild(prixElement);
     article.appendChild(categorieElement);
     article.appendChild(descriptionElement);
     article.appendChild(disponibiliteElement);
-
+    article.appendChild(btnavis); 
     fiches.appendChild(article);
-    
+    btnavis.className="btn-avis";
     }
+    ajoutListenersAvis();
+
 }
 
 genererpieces(piece);
-
+console.log(piece);
 const boutonTrierCroissant = document.querySelector('.btn-trierCroissant');
 
 boutonTrierCroissant.addEventListener('click',function(){
@@ -115,6 +97,7 @@ boutonFiltreDescription.addEventListener('click',function(){
     genererpieces(piecesFiltreDescription);
 })
 
+
 const boutonTrierDecroissant = document.querySelector('.btn-trierDecroissant');
 
 boutonTrierDecroissant.addEventListener('click',function(){
@@ -128,4 +111,3 @@ boutonTrierDecroissant.addEventListener('click',function(){
 
 
 inputRange();
-detailsElements();
