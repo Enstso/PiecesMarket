@@ -8,13 +8,15 @@
 
   Création d'un site web marchand dynamique.
   
-  Les produits du site, ont été préalablement crée dans un fichier Json.
+  Les produits du site, ont été préalablement crées dans un fichier Json.
   
 ## L'objectif :
 
   1. Récupérer les données d'un fichier Json. 
   2. Exploiter/Manipuler ces données.
   3. Prise en main de NodeJS, Npm et Npx.
+
+## Cas d'utilisation :
 
 ```plantuml
 @startuml Les bonnes pièces
