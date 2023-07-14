@@ -1,5 +1,3 @@
-const avis_json = await fetch('http://127.0.0.1:8081/avis');
-const avis = await avis_json.json();
 const pieces = await fetch("http://127.0.0.1:8081/pieces");
 const piece = await pieces.json();
 let fiches = document.querySelector('.fiches').innerHTML = '';
@@ -23,10 +21,9 @@ function genererpieces(piece) {
     for (let i = 0; i < piece.length; i++) {
 
         const article = document.createElement('article');
-        const lblavis = document.createElement('p');
-
+        const btnavis = document.createElement('button');
         const elmt = piece[i];
-        fiches = document.querySelector('.fiches');
+        const fiches = document.querySelector('.fiches');
 
         const imageElement = document.createElement('img');
         imageElement.src = elmt.image;
@@ -45,33 +42,22 @@ function genererpieces(piece) {
 
         const disponibiliteElement = document.createElement('p');
         disponibiliteElement.innerText = elmt.disponibilite ? "En stock" : "Rupture de stock";
-
-        lblavis.innerText = "Les avis :";
-
-        const mesAvis = document.createElement('p');
-
-
-        for (let i = 0; i < avis.length; i++) {
-            if (avis[i].pieceId === elmt.id) {
-                mesAvis.innerText+= "De l'utilisateur " + avis[i].utilisateur + 'commentaire : ' + avis[i].commentaire;
-            }
-        }
-
+        btnavis.dataset.id = elmt.id;
+        btnavis.setAttribute("class", "btn-avis");
+        btnavis.innerText = 'Voir les avis';
         article.appendChild(imageElement);
         article.appendChild(nomElement);
         article.appendChild(prixElement);
         article.appendChild(categorieElement);
         article.appendChild(descriptionElement);
-        article.appendChild(lblavis)
         article.appendChild(disponibiliteElement);
-        article.appendChild(mesAvis)
-
+        article.appendChild(btnavis);
         fiches.appendChild(article);
-        btnavis.className = "btn-avis";
+
     }
-    ajoutListenersAvis();
 
 }
+
 
 genererpieces(piece);
 console.log(piece);
@@ -118,6 +104,35 @@ boutonTrierDecroissant.addEventListener('click', function () {
     document.querySelector('.fiches').innerHTML = '';
     genererpieces(listPieces2);
 })
+
+const btnViewAvis = document.querySelectorAll('.fiches article button');
+
+console.log(btnViewAvis);
+for (let i = 0; i < btnViewAvis.length; i++) {
+    btnViewAvis[i].addEventListener('click', async function (elmt) {
+        const article = elmt.target.parentElement;
+        const idElmt = elmt.target.dataset.id;
+        const divAvis = document.createElement('div'); 
+        if (btnViewAvis[i].innerText == "Voir les avis") {
+            btnViewAvis[i].innerText = "Fermer les avis"
+            console.log(elmt);
+            console.log(idElmt);
+            const response = await fetch("http://127.0.0.1:8081/pieces/" + idElmt + "/avis");
+            const avis = await response.json();
+            for (let i = 0; i < avis.length; i++) {
+                const avisElmt = document.createElement('p');
+                avisElmt.innerText = "L\'avis de " + avis[i].utilisateur + " commentaire :" + avis[i].commentaire + "\r";
+
+                divAvis.appendChild(avisElmt);
+            }
+            article.appendChild(divAvis);
+        }
+        else {
+            btnViewAvis[i].innerText = "Voir les avis"
+            article.removeChild(article.lastElementChild);
+        }
+    });
+}
 
 
 inputRange();
